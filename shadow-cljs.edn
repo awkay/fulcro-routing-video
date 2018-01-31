@@ -1,0 +1,43 @@
+{:lein   {:profile "cljs"}
+ :nrepl  {:port 9000}
+ :builds {:main     {:target     :browser
+                     :output-dir "resources/public/js/main"
+                     :asset-path "/js/main"
+
+                     :modules    {:app {:entries [routing.client]}}
+
+                     :devtools   {:after-load   routing.client/start
+                                  :preloads     [fulcro.inspect.preload routing.development-preload shadow.cljs.devtools.client.hud]
+                                  :http-root    "resources/public"
+                                  :http-handler shadow.http.push-state/handle
+                                  :http-port    8020}}
+
+          :i18n     {:target           :browser
+                     :output-dir       "i18n"
+                     :asset-path       "/"
+                     :modules          {:app {:entries [routing.client]}}
+                     :compiler-options {:optimization :whitespace}}
+
+          :test     {:target    :browser-test
+                     :test-dir  "resources/public/js/test"
+                     :ns-regexp "-spec$"
+                     :runner-ns routing.client-test-main
+                     :devtools  {:http-port          8022
+                                 :http-resource-root "public"
+                                 :http-root          "resources/public/js/test"}}
+
+          :ci-tests {:target     :karma
+                     :js-options {:js-provider :shadow}
+                     :output-to  "target/ci.js"
+                     :ns-regexp  "-spec$"}
+
+          :cards    {:target           :browser
+                     :output-dir       "resources/public/js/cards"
+                     :asset-path       "/js/cards"
+                     :compiler-options {:devcards true}
+                     :modules          {:main
+                                        {:entries [routing.cards]}}
+                     :devtools         {:after-load routing.cards/refresh
+                                        :preloads   [fulcro.inspect.preload routing.development-preload shadow.cljs.devtools.client.hud]
+                                        :http-root  "resources/public"
+                                        :http-port  8023}}}}
