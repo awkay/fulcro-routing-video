@@ -1,6 +1,6 @@
 # Files for Routing Video
 
-These files are the code shown in the [YouTube video about Fulcro routing](http://).
+These files are the code shown in the [YouTube video about Fulcro routing](https://youtu.be/HJBI24yAdBQ).
 
 The samples are coded in the following files:
 
